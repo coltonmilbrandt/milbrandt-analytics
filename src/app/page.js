@@ -1,113 +1,444 @@
-import Image from "next/image";
+// src/app/page.js
+import Image from "next/image"
+import Layout from "../components/Layout"
+import Link from "next/link"
+import heroImage from "../../public/hero-image.jpg"
+import trumpVsBiden from "../../public/trumpVsBiden.jpg"
+import MarketCharts from "../components/MarketCharts"
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const Home = () => {
+	return (
+		<Layout>
+			<div className="relative w-full h-16 sm:h-60">
+				<Image
+					src={heroImage}
+					layout="fill"
+					objectFit="cover"
+					alt="Hero Image"
+				/>
+				<div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
+					<h1 className="text-4xl sm:text-6xl font-bold">
+						Milbrandt Analytics
+					</h1>
+					<p className="mt-4 mb-4 text-lg sm:text-2xl">
+						Actionable Insights, Analysis, and Consulting
+					</p>
+					<Link href="/login">
+						<span className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white text-lg cursor-pointer">
+							Go Premium
+						</span>
+					</Link>
+				</div>
+			</div>
+			<MarketCharts />
+			<main id="content">
+				{/* <!-- advertisement --> */}
+				<div class="bg-gray-50 py-4 hidden">
+					<div class="xl:container mx-auto px-3 sm:px-4 xl:px-2">
+						<div class="mx-auto table text-center text-sm">
+							<a class="uppercase" href="#">
+								Advertisement
+							</a>
+							<a href="#">
+								<Image
+									src={heroImage}
+									alt="advertisement area"
+								/>
+							</a>
+						</div>
+					</div>
+				</div>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+				{/* <!-- hero big grid --> */}
+				<div class="bg-black py-6">
+					<div class="xl:container mx-auto px-3 sm:px-4 xl:px-2">
+						{/* <!-- big grid 1 --> */}
+						<div class="flex flex-row flex-wrap">
+							{/* <!--Start left cover--> */}
+							<div class="flex-shrink max-w-full w-full lg:w-1/2 pb-1 lg:pb-0 lg:pr-1">
+								<div class="relative hover-img max-h-98 overflow-hidden">
+									<a href="#">
+										<Image
+											class="max-w-full w-full mx-auto h-auto"
+											src={trumpVsBiden}
+											alt="Image description"
+										/>
+									</a>
+									<div className="absolute inset-0 bg-black opacity-40"></div>
+									<div class="absolute px-5 pt-8 pb-5 bottom-0 w-full bg-gradient-cover">
+										<a href="#">
+											<h2 class="text-3xl font-bold capitalize text-white mb-3">
+												Paths to Victory: Will Trump
+												Upend Expectations?
+											</h2>
+										</a>
+										<p class="text-gray-100 hidden sm:inline-block">
+											Our pre-debate model forecasts some
+											suprises in November. Can Biden hold
+											on?
+										</p>
+										<div class="pt-2">
+											<div class="text-gray-100">
+												<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
+												Politics
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+							{/* <!--Start box news--> */}
+							<div class="flex-shrink max-w-full w-full lg:w-1/2">
+								<div class="box-one flex flex-row flex-wrap">
+									<article class="flex-shrink max-w-full w-full sm:w-1/2">
+										<div class="relative hover-img max-h-48 overflow-hidden">
+											<a href="#">
+												<Image
+													class="max-w-full w-full mx-auto h-auto"
+													src={heroImage}
+													alt="Image description"
+												/>
+											</a>
+											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
+												<a href="#">
+													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
+														News magazines are
+														becoming obsolete,
+														replaced by gadgets
+													</h2>
+												</a>
+												<div class="pt-1">
+													<div class="text-gray-100">
+														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
+														Techno
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<article class="flex-shrink max-w-full w-full sm:w-1/2">
+										<div class="relative hover-img max-h-48 overflow-hidden">
+											<a href="#">
+												<Image
+													class="max-w-full w-full mx-auto h-auto"
+													src={heroImage}
+													alt="Image description"
+												/>
+											</a>
+											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
+												<a href="#">
+													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
+														Minimalist designs are
+														starting to be popular
+														with the next generation
+													</h2>
+												</a>
+												<div class="pt-1">
+													<div class="text-gray-100">
+														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
+														Architecture
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<article class="flex-shrink max-w-full w-full sm:w-1/2">
+										<div class="relative hover-img max-h-48 overflow-hidden">
+											<a href="#">
+												<Image
+													class="max-w-full w-full mx-auto h-auto"
+													src={heroImage}
+													alt="Image description"
+												/>
+											</a>
+											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
+												<a href="#">
+													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
+														Tips for decorating the
+														interior of the living
+														room
+													</h2>
+												</a>
+												<div class="pt-1">
+													<div class="text-gray-100">
+														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
+														Interior
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+									<article class="flex-shrink max-w-full w-full sm:w-1/2">
+										<div class="relative hover-img max-h-48 overflow-hidden">
+											<a href="#">
+												<Image
+													class="max-w-full w-full mx-auto h-auto"
+													src={heroImage}
+													alt="Image description"
+												/>
+											</a>
+											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
+												<a href="#">
+													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
+														Online taxi users are
+														increasing drastically
+														ahead of the new year
+													</h2>
+												</a>
+												<div class="pt-1">
+													<div class="text-gray-100">
+														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
+														Lifestyle
+													</div>
+												</div>
+											</div>
+										</div>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+				{/* <!-- block news --> */}
+				<div class="bg-white">
+					<div class="xl:container mx-auto px-3 sm:px-4 xl:px-2">
+						<div class="flex flex-row flex-wrap">
+							{/* <!-- Left --> */}
+							<div class="flex-shrink max-w-full w-full lg:w-2/3 overflow-hidden">
+								<div class="w-full py-3">
+									<h2 class="text-gray-800 text-2xl font-bold">
+										<span class="inline-block h-5 border-l-3 border-red-600 mr-2"></span>
+										Europe
+									</h2>
+								</div>
+								<div class="flex flex-row flex-wrap -mx-3">
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+									<div class="flex-shrink max-w-full w-full sm:w-1/3 px-3 pb-3 pt-3 sm:pt-0 border-b-2 sm:border-b-0 border-dotted border-gray-100">
+										<div class="flex flex-row sm:block hover-img">
+											<a href="">
+												<Image
+													class="max-w-full w-full mx-auto"
+													src={heroImage}
+													alt="alt title"
+												/>
+											</a>
+											<div class="py-0 sm:py-3 pl-3 sm:pl-0">
+												<h3 class="text-lg font-bold leading-tight mb-2">
+													<a href="#">
+														5 Tips to Save Money
+														Booking Your Next Hotel
+														Room
+													</a>
+												</h3>
+												<p class="hidden md:block text-gray-600 leading-tight mb-1">
+													This is a wider card with
+													supporting text below as a
+													natural lead-in to
+													additional content.
+												</p>
+												<a
+													class="text-gray-500"
+													href="#"
+												>
+													<span class="inline-block h-3 border-l-2 border-red-600 mr-2"></span>
+													Europe
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{/* <!-- right --> */}
+							<div class="flex-shrink max-w-full w-full lg:w-1/3 lg:pl-8 lg:pt-14 lg:pb-8 order-first lg:order-last">
+								<div class="w-full bg-gray-50 h-full">
+									<div class="text-sm py-6 sticky">
+										<div class="w-full text-center">
+											<a class="uppercase" href="#">
+												Advertisement
+											</a>
+											<a href="#">
+												<Image
+													class="mx-auto"
+													src={heroImage}
+													alt="advertisement area"
+												/>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			{/* <!-- end main --> */}
+		</Layout>
+	)
 }
+
+export default Home
