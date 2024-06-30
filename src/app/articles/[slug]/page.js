@@ -7,6 +7,7 @@ import Layout from "../../../components/Layout"
 import Image from "next/image"
 import heroImage from "../../../../public/hero-image.jpg"
 import trumpVsBiden from "../../../../public/trumpVsBiden.jpg"
+import profile from "../../../../public/profile-img.jpg"
 
 export default async function Article({ params: { slug } }) {
 	const filePath = path.join(process.cwd(), "articles", `${slug}.md`)
@@ -105,7 +106,9 @@ License: You must have a valid license from official store to legally use the th
 																className="font-semibold"
 																href="#"
 															>
-																Ari Budin
+																{
+																	frontmatter.author
+																}
 															</a>
 														</span>
 														{/* <!--date--> */}
@@ -133,7 +136,7 @@ License: You must have a valid license from official store to legally use the th
 																	clipRule="evenodd"
 																></path>
 															</svg>{" "}
-															Oct 22, 2020
+															{frontmatter.date}
 														</time>
 														{/* <!--view--> */}
 														<span className="mr-2 md:mr-4">
@@ -157,7 +160,7 @@ License: You must have a valid license from official store to legally use the th
 																	clipRule="evenodd"
 																></path>
 															</svg>{" "}
-															1.230x view
+															{/* 1.230x view */}
 														</span>
 														{/* <!--end view--> */}
 													</div>
@@ -250,16 +253,16 @@ License: You must have a valid license from official store to legally use the th
 													<a href="#">
 														<Image
 															className="rounded-full border max-w-full h-auto dark:border-gray-700"
-															src={heroImage}
+															src={profile}
 															alt="author"
 														/>
 													</a>
 												</div>
 												<div className="flex-shrink max-w-full px-4 w-2/3 sm:w-3/4 md:w-10/12">
 													{/* <!--name--> */}
-													<p className="text-lg leading-normal mb-2 font-semibold text-gray-800 dark:text-gray-100">
+													<p className="text-lg leading-normal mb-2 font-semibold text-gray-800">
 														<span className="font-semibold">
-															Ari budin
+															{frontmatter.author}
 														</span>
 													</p>
 													{/* <!-- website --> */}
@@ -269,16 +272,13 @@ License: You must have a valid license from official store to legally use the th
 															className="text-red-700"
 															href="#"
 														>
-															https://aribudin.com
+															{
+																frontmatter.website
+															}
 														</a>
 													</p>
 													{/* <!--description--> */}
-													<p>
-														Programmer, Father,
-														Husband, I design and
-														develop Bootstrap
-														template
-													</p>
+													<p>{frontmatter.bio}</p>
 												</div>
 											</div>
 										</div>

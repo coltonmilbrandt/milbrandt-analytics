@@ -1,6 +1,9 @@
 ---
 title: "Paths to Victory: Will Trump Upend Expectations?"
 date: "2024-06-29"
+author: "Colton Milbrandt"
+website: "www.coltonmilbrandt.com"
+bio: "Analyst and consultant who loves making the complex future a little less uncertain."
 ---
 
 ## Biden Struggling to Hold on as Trump Surges

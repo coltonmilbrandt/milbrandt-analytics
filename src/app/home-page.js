@@ -4,6 +4,7 @@ import Layout from "../components/Layout"
 import Link from "next/link"
 import heroImage from "../../public/hero-image.jpg"
 import trumpVsBiden from "../../public/trumpVsBiden.jpg"
+import logo from "../../public/transparent-logo.png"
 import MarketCharts from "../components/MarketCharts"
 
 const Home = () => {
@@ -17,17 +18,18 @@ const Home = () => {
 					alt="Hero Image"
 				/>
 				<div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-					<h1 className="text-4xl sm:text-6xl font-bold">
-						Milbrandt Analytics
-					</h1>
+					<Image src={logo} className="w-auto max-w-sm" />
 					<p className="mt-4 mb-4 text-lg sm:text-2xl">
-						Actionable Insights, Analysis, and Consulting
+						<span className="text-orange-600">
+							Max Out Your Alpha
+						</span>{" "}
+						with World-Class News & Analytics
 					</p>
-					<Link href="/login">
+					{/* <Link href="/login">
 						<span className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white text-lg cursor-pointer">
 							Go Premium
 						</span>
-					</Link>
+					</Link> */}
 				</div>
 			</div>
 			<MarketCharts />
@@ -92,7 +94,7 @@ const Home = () => {
 								<div class="box-one flex flex-row flex-wrap">
 									<article class="flex-shrink max-w-full w-full sm:w-1/2">
 										<div class="relative hover-img max-h-48 overflow-hidden">
-											<a href="#">
+											<a href="/articles/biden-replacement">
 												<Image
 													class="max-w-full w-full mx-auto h-auto"
 													src={heroImage}
@@ -100,17 +102,16 @@ const Home = () => {
 												/>
 											</a>
 											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
-												<a href="#">
+												<a href="/articles/biden-replacement">
 													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
-														News magazines are
-														becoming obsolete,
-														replaced by gadgets
+														Democratic Dilemma: Will
+														Biden Step Aside?
 													</h2>
 												</a>
 												<div class="pt-1">
 													<div class="text-gray-100">
 														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-														Techno
+														Politics
 													</div>
 												</div>
 											</div>
