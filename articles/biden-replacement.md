@@ -14,6 +14,8 @@ At 81 years old, Biden is already the oldest sitting president in U.S. history. 
 
 The combination of Biden's age and his declining poll numbers has created a perfect storm of uncertainty within the Democratic ranks. A recent New York Times/Siena College poll found that 64% of Democratic voters would prefer a different nominee in 2024 (New York Times, 2024). This startling figure has sent shockwaves through the party establishment, prompting serious discussions about potential alternatives.
 
+![Hero Image](/hero-image.jpg)
+
 **The Search for a Successor**
 As doubts about Biden's candidacy intensify, attention is turning to possible replacements. Vice President Kamala Harris, once seen as the heir apparent, has struggled with her own approval ratings and questions about her electability. This has opened the door for other contenders to emerge.
 

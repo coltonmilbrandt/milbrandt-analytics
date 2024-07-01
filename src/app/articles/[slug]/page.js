@@ -3,6 +3,7 @@ import path from "path"
 import matter from "gray-matter"
 import { remark } from "remark"
 import html from "remark-html"
+import remarkImages from "remark-images"
 import Layout from "../../../components/Layout"
 import Image from "next/image"
 import heroImage from "../../../../public/hero-image.jpg"
@@ -13,7 +14,13 @@ export default async function Article({ params: { slug } }) {
 	const filePath = path.join(process.cwd(), "articles", `${slug}.md`)
 	const markdownWithMeta = fs.readFileSync(filePath, "utf-8")
 	const { data: frontmatter, content } = matter(markdownWithMeta)
-	const processedContent = await remark().use(html).process(content)
+
+	const processedContent = await remark()
+		.use(remarkImages, {
+			resolveUrl: (src) => `${src}`,
+		})
+		.use(html)
+		.process(content)
 	const contentHtml = processedContent.toString()
 
 	return (
@@ -59,17 +66,6 @@ License: You must have a valid license from official store to legally use the th
 											<h1>{frontmatter.title}</h1>
 										</article>
 									</div>
-									<figure className="text-center mb-6">
-										<Image
-											className="max-w-full h-auto"
-											src={trumpVsBiden}
-											alt="Image description"
-										/>{" "}
-										<figcaption>
-											{" "}
-											Type here your description
-										</figcaption>
-									</figure>
 									<div className="flex flex-row flex-wrap -mx-3">
 										<div className="max-w-full w-full px-4">
 											{/* <!-- Post content --> */}

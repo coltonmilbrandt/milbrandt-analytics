@@ -3,9 +3,14 @@ import Image from "next/image"
 import Layout from "../components/Layout"
 import Link from "next/link"
 import heroImage from "../../public/hero-image.jpg"
-import trumpVsBiden from "../../public/trumpVsBiden.jpg"
 import logo from "../../public/transparent-logo.png"
-import MarketCharts from "../components/MarketCharts"
+import MarketCharts from "../components/MarketCharts.js"
+import LeftCover from "../components/LeftCover.js"
+import NewsBox from "../components/NewsBox"
+
+// ########### News Article Photos ########### //
+import trumpVsBiden from "../../public/trumpVsBiden.jpg"
+import chips from "../../public/chips.jpg"
 
 const Home = () => {
 	return (
@@ -56,145 +61,50 @@ const Home = () => {
 					<div class="xl:container mx-auto px-3 sm:px-4 xl:px-2">
 						{/* <!-- big grid 1 --> */}
 						<div class="flex flex-row flex-wrap">
-							{/* <!--Start left cover--> */}
-							<div class="flex-shrink max-w-full w-full lg:w-1/2 pb-1 lg:pb-0 lg:pr-1">
-								<div class="relative hover-img max-h-98 overflow-hidden">
-									<a href="/articles/first-article">
-										<Image
-											class="max-w-full w-full mx-auto h-auto"
-											src={trumpVsBiden}
-											alt="Image description"
-										/>
-									</a>
-									<div className="absolute inset-0 bg-black opacity-40"></div>
-									<div class="absolute px-5 pt-8 pb-5 bottom-0 w-full bg-gradient-cover">
-										<a href="/articles/first-article">
-											<h2 class="text-3xl font-bold capitalize text-white mb-3">
-												Paths to Victory: Will Trump
-												Upend Expectations?
-											</h2>
-										</a>
-										<p class="text-gray-100 hidden sm:inline-block">
-											Our pre-debate model forecasts some
-											suprises in November. Can Biden hold
-											on?
-										</p>
-										<div class="pt-2">
-											<div class="text-gray-100">
-												<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-												Politics
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<LeftCover
+								href="/articles/first-article"
+								imageSrc={trumpVsBiden}
+								imageAlt="Image description"
+								title="Paths to Victory: Will Trump Upend Expectations?"
+								description="Our pre-debate model forecasts some surprises in November. Can Biden hold on?"
+								category="Politics"
+							/>
 
 							{/* <!--Start box news--> */}
 							<div class="flex-shrink max-w-full w-full lg:w-1/2">
 								<div class="box-one flex flex-row flex-wrap">
-									<article class="flex-shrink max-w-full w-full sm:w-1/2">
-										<div class="relative hover-img max-h-48 overflow-hidden">
-											<a href="/articles/biden-replacement">
-												<Image
-													class="max-w-full w-full mx-auto h-auto"
-													src={heroImage}
-													alt="Image description"
-												/>
-											</a>
-											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
-												<a href="/articles/biden-replacement">
-													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
-														Democratic Dilemma: Will
-														Biden Step Aside?
-													</h2>
-												</a>
-												<div class="pt-1">
-													<div class="text-gray-100">
-														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-														Politics
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
-									<article class="flex-shrink max-w-full w-full sm:w-1/2">
-										<div class="relative hover-img max-h-48 overflow-hidden">
-											<a href="#">
-												<Image
-													class="max-w-full w-full mx-auto h-auto"
-													src={heroImage}
-													alt="Image description"
-												/>
-											</a>
-											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
-												<a href="#">
-													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
-														Minimalist designs are
-														starting to be popular
-														with the next generation
-													</h2>
-												</a>
-												<div class="pt-1">
-													<div class="text-gray-100">
-														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-														Architecture
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
-									<article class="flex-shrink max-w-full w-full sm:w-1/2">
-										<div class="relative hover-img max-h-48 overflow-hidden">
-											<a href="#">
-												<Image
-													class="max-w-full w-full mx-auto h-auto"
-													src={heroImage}
-													alt="Image description"
-												/>
-											</a>
-											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
-												<a href="#">
-													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
-														Tips for decorating the
-														interior of the living
-														room
-													</h2>
-												</a>
-												<div class="pt-1">
-													<div class="text-gray-100">
-														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-														Interior
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
-									<article class="flex-shrink max-w-full w-full sm:w-1/2">
-										<div class="relative hover-img max-h-48 overflow-hidden">
-											<a href="#">
-												<Image
-													class="max-w-full w-full mx-auto h-auto"
-													src={heroImage}
-													alt="Image description"
-												/>
-											</a>
-											<div class="absolute px-4 pt-7 pb-4 bottom-0 w-full bg-gradient-cover">
-												<a href="#">
-													<h2 class="text-lg font-bold capitalize leading-tight text-white mb-1">
-														Online taxi users are
-														increasing drastically
-														ahead of the new year
-													</h2>
-												</a>
-												<div class="pt-1">
-													<div class="text-gray-100">
-														<div class="inline-block h-3 border-l-2 border-red-600 mr-2"></div>
-														Lifestyle
-													</div>
-												</div>
-											</div>
-										</div>
-									</article>
+									<NewsBox
+										href="/articles/nvidia-buy-timing"
+										imageSrc={chips} // Ensure you have a relevant image imported
+										imageAlt="Voting booth"
+										title="Buying Nvidia: is it Cisco in 2000 or Apple in 2012?"
+										description="Taking a look at the comparables and projected growth, is Nvidia a dud at this price or just getting started?"
+										category="Stocks"
+									/>
+									<NewsBox
+										href="/articles/biden-replacement"
+										imageSrc={trumpVsBiden}
+										imageAlt="Image description"
+										title="Democratic Dilemma: Will Biden Step Aside?"
+										description="Our pre-debate model forecasts some surprises in November. Can Biden hold on?"
+										category="Politics"
+									/>
+									<NewsBox
+										href="/articles/trump-key-victory"
+										imageSrc={trumpVsBiden} // Ensure you have a relevant image imported
+										imageAlt="Campaign rally"
+										title="Trump's Key to Victory: Winning This State Could Seal the Deal"
+										description="An in-depth look at the pivotal state that could determine Trump's path to victory in the upcoming election."
+										category="Politics"
+									/>
+									<NewsBox
+										href="/articles/trump-achilles-heel"
+										imageSrc={trumpVsBiden} // Ensure you have a relevant image imported
+										imageAlt="Political debate"
+										title="Trump's Achilles Heel: The Challenges That Could Derail His Campaign"
+										description="An analysis of the key vulnerabilities and challenges facing Trump's campaign as he vies for the presidency."
+										category="Politics"
+									/>
 								</div>
 							</div>
 						</div>

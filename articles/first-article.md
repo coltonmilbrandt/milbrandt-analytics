@@ -6,6 +6,8 @@ website: "www.coltonmilbrandt.com"
 bio: "Analyst and consultant who loves making the complex future a little less uncertain."
 ---
 
+![Trump & Biden](/trumpvsbiden.jpg)
+
 ## Biden Struggling to Hold on as Trump Surges
 
 Predicting the outcome of a presidential election, especially one involving a highly polarizing figure like Donald Trump, is fraught with complexities. Trump's potential to win the presidency hinges on a variety of factors, including the state of the economy, public opinion, and his ability to galvanize his base while appealing to undecided and swing voters. His previous tenure as president provides both a foundation of loyal supporters who appreciate his unorthodox approach and policy stances, and a significant segment of the electorate that remains vehemently opposed to his return. Key issues such as immigration, healthcare, and economic recovery post-pandemic will play pivotal roles in swaying voters' decisions.
