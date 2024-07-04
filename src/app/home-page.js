@@ -15,6 +15,8 @@ import chips from "../../public/chips.jpg"
 import electionSimJPG from "../../public/electionSim.jpg"
 import usaMapJPG from "../../public/usa-map.jpg"
 import diceAndChips from "../../public/dice-and-chips.jpg"
+import bitcoinJPG from "../../public/bitcoin.jpg"
+import fedBuildingJPG from "../../public/fed-building.jpeg"
 
 const Home = () => {
 	return (
@@ -78,6 +80,14 @@ const Home = () => {
 							<div class="flex-shrink max-w-full w-full lg:w-1/2">
 								<div class="box-one flex flex-row flex-wrap">
 									<NewsBox
+										href="/articles/trump-betting-discount"
+										imageSrc={diceAndChips} // Ensure you have a relevant image imported
+										imageAlt="Campaign rally"
+										title="Trump Betting Odds May be at a Massive Discount"
+										description="An in-depth look at the pivotal state that could determine Trump's path to victory in the upcoming election."
+										category="Politics"
+									/>
+									<NewsBox
 										href="/articles/nvidia-buy-timing"
 										imageSrc={chips} // Ensure you have a relevant image imported
 										imageAlt="Voting booth"
@@ -89,25 +99,17 @@ const Home = () => {
 										href="/articles/biden-replacement"
 										imageSrc={trumpVsBiden}
 										imageAlt="Image description"
-										title="Democratic Dilemma: Will Biden Step Aside?"
+										title="November Surprise: The Most Likely Ways for Democrats to Win the Presidency"
 										description="Our pre-debate model forecasts some surprises in November. Can Biden hold on?"
 										category="Politics"
 									/>
 									<NewsBox
-										href="/articles/trump-betting-discount"
-										imageSrc={diceAndChips} // Ensure you have a relevant image imported
-										imageAlt="Campaign rally"
-										title="Trump Betting Odds May be at a Massive Discount"
-										description="An in-depth look at the pivotal state that could determine Trump's path to victory in the upcoming election."
-										category="Politics"
-									/>
-									<NewsBox
 										href="/articles/trump-achilles-heel"
-										imageSrc={trumpVsBiden} // Ensure you have a relevant image imported
+										imageSrc={bitcoinJPG} // Ensure you have a relevant image imported
 										imageAlt="Political debate"
-										title="Trump's Achilles Heel: The Challenges That Could Derail His Campaign"
+										title="If Bitcoin was a Stock, I Wouldn't Buy it Either"
 										description="An analysis of the key vulnerabilities and challenges facing Trump's campaign as he vies for the presidency."
-										category="Politics"
+										category="Crypto"
 									/>
 								</div>
 							</div>
@@ -169,12 +171,12 @@ const Home = () => {
 										category="Politics"
 									/>
 									<ContentBox
-										href="/articles/trump-achilles-heel"
-										imageSrc={trumpVsBiden} // Ensure you have a relevant image imported
-										imageAlt="Political debate"
-										title="Trump's Achilles Heel: The Challenges That Could Derail His Campaign"
-										description="An analysis of the key vulnerabilities and challenges facing Trump's campaign as he vies for the presidency."
-										category="Politics"
+										href="/articles/the-dangerous-policy-of-printing-money"
+										imageSrc={fedBuildingJPG} // Ensure you have a relevant image imported
+										imageAlt="The Fed"
+										title="The Dangerous Policy of Printing Money"
+										description="Controversial Monetary Policies and the Hidden Costs of Inflation - Why the Federal Reserve's Actions Need Urgent Reevaluation (2011)"
+										category="Finance"
 									/>
 								</div>
 							</div>
