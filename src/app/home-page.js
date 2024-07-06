@@ -1,4 +1,6 @@
 // src/app/page.js
+"use client"
+
 import Image from "next/image"
 import Layout from "../components/Layout"
 import Link from "next/link"
@@ -8,6 +10,7 @@ import MarketCharts from "../components/MarketCharts.js"
 import LeftCover from "../components/LeftCover.js"
 import NewsBox from "../components/NewsBox"
 import ContentBox from "../components/ContentBox"
+import MyChart from "../components/chart"
 
 // ########### News Article Photos ########### //
 import trumpVsBiden from "../../public/trumpVsBiden.jpg"
@@ -204,6 +207,7 @@ const Home = () => {
 				</div>
 			</main>
 			{/* <!-- end main --> */}
+			<MyChart />
 		</Layout>
 	)
 }

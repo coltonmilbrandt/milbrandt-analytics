@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
 					type="text/javascript"
 					src="https://s3.tradingview.com/tv.js"
 				></script>
+				<script src="https://www.gstatic.com/charts/loader.js"></script>
 			</head>
 			<body className={inter.className}>
 				<SessionProvider>{children}</SessionProvider>
