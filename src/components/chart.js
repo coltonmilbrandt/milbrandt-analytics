@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import * as echarts from "echarts"
 
 const Chart = () => {
 	const [data, setData] = useState([])
 	const [volumeData, setVolumeData] = useState([])
+	const dataRef = useRef([])
+	const monthDisplayedRef = useRef({})
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -22,10 +24,16 @@ const Chart = () => {
 							item.low,
 							item.high,
 						])
-						volumeData.push([item.date, item.volume])
+						volumeData.push({
+							date: item.date,
+							volume: item.volume,
+							color:
+								item.close > item.open ? "#92d3cc" : "#f8a9a7", // Green for bullish, red for bearish
+						})
 					})
 					setData(chartData)
 					setVolumeData(volumeData)
+					dataRef.current = chartData // Update the ref with the new data
 					console.log("Formatted Chart Data:", chartData)
 					console.log("Formatted Volume Data:", volumeData)
 				} else {
@@ -46,20 +54,16 @@ const Chart = () => {
 
 			const option = {
 				title: {
-					text: "AAPL Stock Price with Volume",
+					text: "AAPL",
 					left: "center",
-					textStyle: { color: "#ffffff" },
+					textStyle: { color: "#151924" },
 				},
-				backgroundColor: "#0d0d0d",
+				backgroundColor: "#fff",
 				tooltip: {
 					trigger: "axis",
 					axisPointer: {
 						type: "cross",
 					},
-				},
-				legend: {
-					data: ["AAPL", "Volume"],
-					textStyle: { color: "#ffffff" },
 				},
 				grid: [
 					{
@@ -80,30 +84,74 @@ const Chart = () => {
 						data: data.map((item) => item[0]),
 						scale: true,
 						boundaryGap: false,
-						axisLine: { lineStyle: { color: "#8392A5" } },
-						axisLabel: { color: "#ffffff" },
-						splitLine: { show: false },
+						axisLine: { lineStyle: { color: "#f3f4f4" } },
+						axisLabel: { show: false }, // Hide labels on the candlestick x-axis
+						splitLine: { lineStyle: { color: "#f3f4f4" } },
 					},
 					{
 						type: "category",
 						gridIndex: 1,
 						data: data.map((item) => item[0]),
-						axisLine: { lineStyle: { color: "#8392A5" } },
-						axisLabel: { color: "#ffffff" },
+						axisLine: { lineStyle: { color: "#f3f4f4" } },
+						axisLabel: {
+							color: "#222", // Show labels on the volume x-axis
+							formatter: (value, index) => {
+								const date = new Date(value) // Convert the value to a Date object
+								const day = date.getDate() // Get the day of the month
+								const month = date.toLocaleString("default", {
+									month: "short",
+								}) // Get the short month name
+
+								if (index === 0) {
+									// If it's the first data point, return the month
+									monthDisplayedRef.current = {}
+									console.log(
+										`Index: ${index}, Value: ${value}, Output: ${month}`
+									)
+									return day
+								}
+
+								const prevDate = new Date(
+									dataRef.current[index - 1][0]
+								) // Get the previous date
+								const prevMonth = prevDate.getMonth()
+								const currMonth = date.getMonth()
+
+								if (currMonth !== prevMonth) {
+									if (!monthDisplayedRef.current[currMonth]) {
+										monthDisplayedRef.current[
+											currMonth
+										] = true
+										console.log(
+											`Index: ${index}, Value: ${value}, Output: ${month}`
+										)
+										return month
+									}
+								}
+
+								// If not the first day of a new month, return the day
+								console.log(
+									`Index: ${index}, Value: ${value}, Output: ${day}`
+								)
+								return `${day}`
+							},
+						},
+						splitLine: { lineStyle: { color: "#f3f4f4" } },
 					},
 				],
 				yAxis: [
 					{
 						scale: true,
-						axisLine: { lineStyle: { color: "#8392A5" } },
-						axisLabel: { color: "#ffffff" },
-						splitLine: { lineStyle: { color: "#333" } },
+						position: "right", // Move price labels to the right
+						axisLine: { lineStyle: { color: "#f3f4f4" } },
+						axisLabel: { color: "#151924" },
+						splitLine: { lineStyle: { color: "#f3f4f4" } },
 					},
 					{
 						gridIndex: 1,
-						axisLine: { lineStyle: { color: "#8392A5" } },
-						axisLabel: { color: "#ffffff" },
-						splitLine: { lineStyle: { color: "#333" } },
+						axisLine: { lineStyle: { color: "#f3f4f4" } },
+						axisLabel: { show: false }, // Hide labels on the volume y-axis
+						splitLine: { lineStyle: { color: "#f3f4f4" } },
 					},
 				],
 				dataZoom: [
@@ -133,10 +181,10 @@ const Chart = () => {
 							item[4],
 						]),
 						itemStyle: {
-							color: "#0f9d58",
-							color0: "#a52714",
-							borderColor: "#0f9d58",
-							borderColor0: "#a52714",
+							color: "#1e9981",
+							color0: "#f23646",
+							borderColor: "#1e9981",
+							borderColor0: "#f23646",
 						},
 					},
 					{
@@ -144,10 +192,10 @@ const Chart = () => {
 						type: "bar",
 						xAxisIndex: 1,
 						yAxisIndex: 1,
-						data: volumeData.map((item) => item[1]),
-						itemStyle: {
-							color: "#8392A5",
-						},
+						data: volumeData.map((item) => ({
+							value: item.volume,
+							itemStyle: { color: item.color },
+						})),
 					},
 				],
 			}
