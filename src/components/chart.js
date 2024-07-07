@@ -5,6 +5,7 @@ import * as echarts from "echarts"
 const Chart = () => {
 	const [data, setData] = useState([])
 	const [volumeData, setVolumeData] = useState([])
+	const chartRef = useRef(null)
 	const dataRef = useRef([])
 	const monthDisplayedRef = useRef({})
 
@@ -51,6 +52,7 @@ const Chart = () => {
 		if (data.length > 0) {
 			const chartDom = document.getElementById("chart_div")
 			const myChart = echarts.init(chartDom)
+			chartRef.current = myChart
 
 			const option = {
 				title: {
@@ -108,7 +110,7 @@ const Chart = () => {
 									console.log(
 										`Index: ${index}, Value: ${value}, Output: ${month}`
 									)
-									return day
+									return month
 								}
 
 								const prevDate = new Date(
@@ -116,6 +118,11 @@ const Chart = () => {
 								) // Get the previous date
 								const prevMonth = prevDate.getMonth()
 								const currMonth = date.getMonth()
+
+								console.log(`prev date: ${prevDate}`)
+								console.log(`current day: ${day}`)
+								console.log(`prev Month: ${prevMonth}`)
+								console.log(`current month: ${currMonth}`)
 
 								if (currMonth !== prevMonth) {
 									if (!monthDisplayedRef.current[currMonth]) {
@@ -208,7 +215,72 @@ const Chart = () => {
 		}
 	}, [data, volumeData])
 
-	return <div id="chart_div" style={{ width: "100%", height: "600px" }}></div>
+	const handleSnapshot = (
+		cropLeft = 0,
+		cropRight = 0,
+		cropTop = 0,
+		cropBottom = 0,
+		extraTop = 300 // New parameter for extra space at the top
+	) => {
+		if (chartRef.current) {
+			const img = chartRef.current.getDataURL({
+				type: "png",
+				pixelRatio: 2,
+				backgroundColor: "#fff",
+			})
+
+			// Create an image element
+			const image = new Image()
+			image.src = img
+			image.onload = () => {
+				// Create a canvas element
+				const canvas = document.createElement("canvas")
+				const ctx = canvas.getContext("2d")
+
+				// Set canvas dimensions
+				canvas.width = image.width - cropLeft - cropRight
+				canvas.height = image.height - cropTop - cropBottom + extraTop // Add extra space at the top
+
+				// Fill the canvas with white color
+				ctx.fillStyle = "#fff"
+				ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+				// Draw the image onto the canvas, cropping the specified amounts
+				ctx.drawImage(
+					image,
+					cropLeft,
+					cropTop, // Start point in the source image
+					canvas.width,
+					image.height - cropTop - cropBottom, // Height to draw
+					0,
+					extraTop, // Start point in the destination canvas (300px down)
+					canvas.width,
+					image.height - cropTop - cropBottom // Height to draw in the destination canvas
+				)
+
+				// Get the cropped image data
+				const croppedImg = canvas.toDataURL("image/png")
+
+				// Create a link to download the cropped image
+				const link = document.createElement("a")
+				link.href = croppedImg
+				link.download = "chart_snapshot_cropped.png"
+				link.click()
+			}
+		}
+	}
+
+	return (
+		<div>
+			<div
+				id="chart_div"
+				style={{ width: "100%", height: "600px" }}
+			></div>
+			<button onClick={() => handleSnapshot(300, 250, 50, 220, 300)}>
+				Take Snapshot
+			</button>
+		</div>
+	)
 }
 
 export default Chart
