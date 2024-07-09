@@ -11,6 +11,7 @@ import LeftCover from "../components/LeftCover.js"
 import NewsBox from "../components/NewsBox"
 import ContentBox from "../components/ContentBox"
 import MyChart from "../components/chart"
+import { useState } from "react"
 
 // ########### News Article Photos ########### //
 import trumpVsBiden from "../../public/trumpVsBiden.jpg"
@@ -22,6 +23,23 @@ import bitcoinJPG from "../../public/bitcoin.jpg"
 import fedBuildingJPG from "../../public/fed-building.jpeg"
 
 const Home = () => {
+	const [outpaintedImagePath, setOutpaintedImagePath] = useState("")
+	const handleOutpaint = async () => {
+		try {
+			const response = await fetch("/api/outpaint", {
+				method: "POST",
+			})
+			const data = await response.json()
+			if (data.success) {
+				setOutpaintedImagePath(data.path)
+				console.log("Outpainted image path:", data.path)
+			} else {
+				console.error("Failed to outpaint image")
+			}
+		} catch (error) {
+			console.error("Error:", error)
+		}
+	}
 	return (
 		<Layout>
 			<div className="relative w-full h-16 sm:h-60">
@@ -208,6 +226,15 @@ const Home = () => {
 			</main>
 			{/* <!-- end main --> */}
 			<MyChart />
+			<div>
+				<button onClick={handleOutpaint}>Outpaint Image</button>
+				{outpaintedImagePath && (
+					<div>
+						<h2>Outpainted Image:</h2>
+						<img src={outpaintedImagePath} alt="Outpainted" />
+					</div>
+				)}
+			</div>
 		</Layout>
 	)
 }

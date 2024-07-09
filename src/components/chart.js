@@ -261,11 +261,26 @@ const Chart = () => {
 				// Get the cropped image data
 				const croppedImg = canvas.toDataURL("image/png")
 
-				// Create a link to download the cropped image
-				const link = document.createElement("a")
-				link.href = croppedImg
-				link.download = "chart_snapshot_cropped.png"
-				link.click()
+				// Send the cropped image data to the server for saving
+				fetch("/api/upload", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ image: croppedImg }),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.success) {
+							console.log(
+								"Image uploaded successfully:",
+								data.path
+							)
+						} else {
+							console.error("Failed to upload image")
+						}
+					})
+					.catch((error) => console.error("Error:", error))
 			}
 		}
 	}
