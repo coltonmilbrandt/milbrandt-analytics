@@ -1,15 +1,15 @@
-// pages/api/outpaint.js
-
 import fs from "fs"
 import axios from "axios"
 import FormData from "form-data"
 import path from "path"
 
-const outpaintImage = async (imagePath, outputPath) => {
+const outpaintImage = async (imagePath, outputPath, creativity, prompt) => {
 	const payload = {
 		image: fs.createReadStream(imagePath),
 		right: 500, // Outpaint 500 pixels to the right
 		output_format: "webp",
+		creativity, // Add creativity parameter
+		prompt, // Add prompt parameter
 	}
 
 	try {
@@ -39,6 +39,7 @@ const outpaintImage = async (imagePath, outputPath) => {
 
 export default async function handler(req, res) {
 	if (req.method === "POST") {
+		const { creativity = 0.5, prompt = "" } = req.body // Default values
 		const imagePath = path.join(
 			process.cwd(),
 			"public",
@@ -53,7 +54,7 @@ export default async function handler(req, res) {
 		)
 
 		try {
-			await outpaintImage(imagePath, outputPath)
+			await outpaintImage(imagePath, outputPath, creativity, prompt)
 			res.status(200).json({
 				success: true,
 				path: "/imageTest/outpainted_image.webp",

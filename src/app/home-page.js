@@ -24,10 +24,18 @@ import fedBuildingJPG from "../../public/fed-building.jpeg"
 
 const Home = () => {
 	const [outpaintedImagePath, setOutpaintedImagePath] = useState("")
+	const [creativity, setCreativity] = useState(0.2)
+	const [prompt, setPrompt] = useState(
+		"1D AAPL candlestick chart. Tradingview stock chart. 1 day candles and volume. Candlesticks extend fully to the right side of the chart."
+	)
 	const handleOutpaint = async () => {
 		try {
 			const response = await fetch("/api/outpaint", {
 				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ creativity, prompt }),
 			})
 			const data = await response.json()
 			if (data.success) {
@@ -227,6 +235,33 @@ const Home = () => {
 			{/* <!-- end main --> */}
 			<MyChart />
 			<div>
+				<div>
+					<label>
+						Creativity:
+						<input
+							type="number"
+							class="text-gray-800"
+							value={creativity}
+							onChange={(e) =>
+								setCreativity(parseFloat(e.target.value))
+							}
+							min="0"
+							max="1"
+							step="0.1"
+						/>
+					</label>
+				</div>
+				<div>
+					<label>
+						Prompt:
+						<input
+							type="text"
+							class="text-gray-800 w-full"
+							value={prompt}
+							onChange={(e) => setPrompt(e.target.value)}
+						/>
+					</label>
+				</div>
 				<button onClick={handleOutpaint}>Outpaint Image</button>
 				{outpaintedImagePath && (
 					<div>

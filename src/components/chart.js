@@ -291,7 +291,7 @@ const Chart = () => {
 				id="chart_div"
 				style={{ width: "100%", height: "600px" }}
 			></div>
-			<button onClick={() => handleSnapshot(300, 250, 50, 220, 300)}>
+			<button onClick={() => handleSnapshot(900, 250, 50, 220, 300)}>
 				Take Snapshot
 			</button>
 		</div>
