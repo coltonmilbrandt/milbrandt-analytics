@@ -219,9 +219,7 @@ const Chart = () => {
 		cropLeft = 0,
 		cropRight = 0,
 		cropTop = 0,
-		cropBottom = 0,
-		extraTop = 300, // New parameter for extra space at the top
-		extraRight = 300 // New parameter for extra space to the right
+		cropBottom = 0
 	) => {
 		if (chartRef.current) {
 			const img = chartRef.current.getDataURL({
@@ -239,121 +237,49 @@ const Chart = () => {
 				const ctx = canvas.getContext("2d")
 
 				// Set canvas dimensions
-				canvas.width = image.width + extraRight // Add extra space to the right
-				canvas.height = image.height + extraTop // Add extra space at the top
+				canvas.width = image.width - cropLeft - cropRight
+				canvas.height = image.height - cropTop - cropBottom // Add extra space at the top
 
 				// Fill the canvas with white color
 				ctx.fillStyle = "#fff"
 				ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-				// Draw the entire image onto the canvas
-				ctx.drawImage(image, 0, extraTop)
-
-				const testImg = canvas.toDataURL("image/png")
-
-				console.log(testImg)
-
-				// Create a canvas element to save the 50px slice
-				const sliceCanvas = document.createElement("canvas")
-				const sliceCtx = sliceCanvas.getContext("2d")
-
-				// Set slice canvas dimensions
-				sliceCanvas.width = 60
-				sliceCanvas.height = image.height
-
-				// Draw the 50px slice onto the slice canvas
-				sliceCtx.drawImage(
+				// Draw the image onto the canvas, cropping the specified amounts
+				ctx.drawImage(
 					image,
-					image.width - 240, // Start point for the last 60 pixels in the source image
-					0, // Start point in the source image
-					60, // Width of the last 60 pixels
-					image.height, // Height to draw from the source
+					cropLeft,
+					cropTop, // Start point in the source image
+					canvas.width,
+					image.height - cropTop - cropBottom, // Height to draw
 					0,
-					0, // Start point in the destination canvas
-					60, // Width to draw in the destination canvas
-					image.height // Height to draw in the destination canvas
+					0, // Start point in the destination canvas (300px down)
+					canvas.width,
+					image.height - cropTop - cropBottom // Height to draw in the destination canvas
 				)
 
-				// Get the 50px slice image data
-				const sliceImg = sliceCanvas.toDataURL("image/png")
+				// Get the cropped image data
+				const croppedImg = canvas.toDataURL("image/png")
 
-				console.log(sliceImg)
-
-				// Create an image element for the 50px slice
-				const sliceImage = new Image()
-				sliceImage.src = sliceImg
-				sliceImage.onload = () => {
-					// Create a canvas element for the final image
-					const finalCanvas = document.createElement("canvas")
-					const finalCtx = finalCanvas.getContext("2d")
-
-					// Set final canvas dimensions
-					finalCanvas.width =
-						image.width - cropLeft - cropRight + extraRight
-					finalCanvas.height =
-						image.height - cropTop - cropBottom + extraTop
-
-					// Fill the final canvas with white color
-					finalCtx.fillStyle = "#fff"
-					finalCtx.fillRect(
-						0,
-						0,
-						finalCanvas.width,
-						finalCanvas.height
-					)
-
-					// Draw the cropped image onto the final canvas
-					finalCtx.drawImage(
-						image,
-						cropLeft,
-						cropTop, // Start point in the source image
-						image.width - cropLeft - cropRight, // Width to draw from the source
-						image.height - cropTop - cropBottom, // Height to draw from the source
-						0,
-						extraTop, // Start point in the destination canvas
-						image.width - cropLeft - cropRight, // Width to draw in the destination canvas
-						image.height - cropTop - cropBottom // Height to draw in the destination canvas
-					)
-
-					// Draw the 50px slice at the far right side of the final canvas
-					finalCtx.drawImage(
-						sliceImage,
-						0,
-						0, // Start point in the source image
-						50, // Width of the 50px slice
-						sliceImage.height, // Height of the 50px slice
-						finalCanvas.width - 50, // Start point in the destination canvas for the 50px slice
-						extraTop, // Start point in the destination canvas (300px down)
-						50, // Width to draw in the destination canvas
-						sliceImage.height // Height to draw in the destination canvas
-					)
-
-					// Get the final image data
-					const finalImg = finalCanvas.toDataURL("image/png")
-
-					console.log(finalImg)
-
-					// Send the final image data to the server for saving
-					fetch("/api/upload", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-						},
-						body: JSON.stringify({ image: finalImg }),
+				// Send the cropped image data to the server for saving
+				fetch("/api/upload", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({ image: croppedImg }),
+				})
+					.then((response) => response.json())
+					.then((data) => {
+						if (data.success) {
+							console.log(
+								"Image uploaded successfully:",
+								data.path
+							)
+						} else {
+							console.error("Failed to upload image")
+						}
 					})
-						.then((response) => response.json())
-						.then((data) => {
-							if (data.success) {
-								console.log(
-									"Image uploaded successfully:",
-									data.path
-								)
-							} else {
-								console.error("Failed to upload image")
-							}
-						})
-						.catch((error) => console.error("Error:", error))
-				}
+					.catch((error) => console.error("Error:", error))
 			}
 		}
 	}
@@ -364,7 +290,7 @@ const Chart = () => {
 				id="chart_div"
 				style={{ width: "100%", height: "600px" }}
 			></div>
-			<button onClick={() => handleSnapshot(900, 250, 50, 220, 300, 500)}>
+			<button onClick={() => handleSnapshot(900, 250, 50, 220)}>
 				Take Snapshot
 			</button>
 		</div>

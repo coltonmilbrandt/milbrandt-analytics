@@ -26,7 +26,7 @@ const Home = () => {
 	const [outpaintedImagePath, setOutpaintedImagePath] = useState("")
 	const [creativity, setCreativity] = useState(0.2)
 	const [prompt, setPrompt] = useState(
-		"1D AAPL candlestick chart. Tradingview stock chart. 1 day candles and volume. Candlesticks extend fully to the right side of the chart. The chart is clean and clear of labels or words."
+		"1D Tradingview AAPL candlestick chart. Chart extends fully to the (right). Light grey gridlines run across the chart horizontally for the full height. [[[labels]]] [[[words]]] [[[text]]] [[[numbers]]]"
 	)
 	const handleOutpaint = async () => {
 		try {
