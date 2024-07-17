@@ -7,7 +7,6 @@ const outpaintImage = async (imagePath, outputPath, creativity, prompt) => {
 	const payload = {
 		image: fs.createReadStream(imagePath),
 		right: 500, // Outpaint 500 pixels to the right
-		up: 300,
 		output_format: "webp",
 		creativity, // Add creativity parameter
 		prompt, // Add prompt parameter

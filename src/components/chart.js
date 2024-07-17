@@ -56,7 +56,7 @@ const Chart = () => {
 
 			const option = {
 				title: {
-					text: "AAPL",
+					text: "BTC",
 					left: "center",
 					textStyle: { color: "#151924" },
 				},
@@ -119,27 +119,27 @@ const Chart = () => {
 								const prevMonth = prevDate.getMonth()
 								const currMonth = date.getMonth()
 
-								console.log(`prev date: ${prevDate}`)
-								console.log(`current day: ${day}`)
-								console.log(`prev Month: ${prevMonth}`)
-								console.log(`current month: ${currMonth}`)
+								// console.log(`prev date: ${prevDate}`)
+								// console.log(`current day: ${day}`)
+								// console.log(`prev Month: ${prevMonth}`)
+								// console.log(`current month: ${currMonth}`)
 
 								if (currMonth !== prevMonth) {
 									if (!monthDisplayedRef.current[currMonth]) {
 										monthDisplayedRef.current[
 											currMonth
 										] = true
-										console.log(
-											`Index: ${index}, Value: ${value}, Output: ${month}`
-										)
+										// console.log(
+										// 	`Index: ${index}, Value: ${value}, Output: ${month}`
+										// )
 										return month
 									}
 								}
 
 								// If not the first day of a new month, return the day
-								console.log(
-									`Index: ${index}, Value: ${value}, Output: ${day}`
-								)
+								// console.log(
+								// 	`Index: ${index}, Value: ${value}, Output: ${day}`
+								// )
 								return `${day}`
 							},
 						},
@@ -152,7 +152,11 @@ const Chart = () => {
 						position: "right", // Move price labels to the right
 						axisLine: { lineStyle: { color: "#f3f4f4" } },
 						axisLabel: { color: "#151924" },
-						splitLine: { lineStyle: { color: "#f3f4f4" } },
+						splitLine: {
+							show: true,
+							lineStyle: { color: "#f3f4f4" },
+						}, // Ensure gridlines are visible for the main chart
+						max: (value) => Math.ceil((value.max * 1.3) / 10) * 10, // round to nearest 10
 					},
 					{
 						gridIndex: 1,
@@ -179,7 +183,7 @@ const Chart = () => {
 				],
 				series: [
 					{
-						name: "AAPL",
+						name: "BTC",
 						type: "candlestick",
 						data: data.map((item) => [
 							item[1],
@@ -288,9 +292,9 @@ const Chart = () => {
 		<div>
 			<div
 				id="chart_div"
-				style={{ width: "100%", height: "600px" }}
+				style={{ width: "100%", height: "800px" }}
 			></div>
-			<button onClick={() => handleSnapshot(900, 250, 50, 220)}>
+			<button onClick={() => handleSnapshot(800, 250, 50, 295)}>
 				Take Snapshot
 			</button>
 		</div>

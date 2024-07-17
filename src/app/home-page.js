@@ -14,9 +14,9 @@ import MyChart from "../components/chart"
 import { useState } from "react"
 
 // ########### News Article Photos ########### //
-import trumpVsBiden from "../../public/trumpVsBiden.jpg"
+import trumpVsBiden from "../../public/trumpvsbiden.jpg"
 import chips from "../../public/chips.jpg"
-import electionSimJPG from "../../public/electionSim.jpg"
+import electionSimJPG from "../../public/ElectionSim.jpg"
 import usaMapJPG from "../../public/usa-map.jpg"
 import diceAndChips from "../../public/dice-and-chips.jpg"
 import bitcoinJPG from "../../public/bitcoin.jpg"
@@ -24,11 +24,12 @@ import fedBuildingJPG from "../../public/fed-building.jpeg"
 
 const Home = () => {
 	const [outpaintedImagePath, setOutpaintedImagePath] = useState("")
-	const [creativity, setCreativity] = useState(0.2)
+	const [creativity, setCreativity] = useState(0.1)
 	const [prompt, setPrompt] = useState(
-		"1D Tradingview AAPL candlestick chart. Chart extends fully to the (right). Light grey gridlines run across the chart horizontally for the full height. [[[labels]]] [[[words]]] [[[text]]] [[[numbers]]]"
+		"1D Tradingview BTCUSD candlestick chart. Candlesticks go all the way to the right side of the chart. Light grey gridlines run across the chart horizontally for the full width. [[[no labels]]] [[[no words]]] [[[no text]]] [[[no numbers]]] [[[no gaps]]] [[[full width]]]"
 	)
 	const handleOutpaint = async () => {
+		console.log("Outpainting...")
 		try {
 			const response = await fetch("/api/outpaint", {
 				method: "POST",
