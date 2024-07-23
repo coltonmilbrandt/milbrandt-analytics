@@ -4,6 +4,7 @@
 import { SessionProvider } from "next-auth/react"
 import { Inter } from "next/font/google"
 import "./globals.css"
+import Script from "next/script"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -16,16 +17,16 @@ export default function RootLayout({ children }) {
 					name="description"
 					content="Welcome to Milbrandt Analytics"
 				/>
-				<script
+				<Script
 					type="text/javascript"
 					src="https://s3.tradingview.com/tv.js"
-				></script>
-				<script
+				/>
+				<Script
 					type="text/javascript"
 					src="https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js"
 					async
-				></script>
-				<script src="https://www.gstatic.com/charts/loader.js"></script>
+				/>
+				<Script src="https://www.gstatic.com/charts/loader.js" />
 			</head>
 			<body className={inter.className}>
 				<SessionProvider>{children}</SessionProvider>

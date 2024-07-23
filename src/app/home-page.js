@@ -11,6 +11,7 @@ import LeftCover from "../components/LeftCover.js"
 import NewsBox from "../components/NewsBox"
 import ContentBox from "../components/ContentBox"
 import MyChart from "../components/chart"
+import CreateChart from "../components/CreateChart"
 import { useState } from "react"
 
 // ########### News Article Photos ########### //
@@ -59,7 +60,7 @@ const Home = () => {
 					alt="Hero Image"
 				/>
 				<div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center text-white">
-					<Image src={logo} className="w-auto max-w-sm" />
+					<Image src={logo} className="w-auto max-w-sm" alt="logo" />
 					<p className="mt-4 mb-4 text-lg sm:text-2xl">
 						<span className="text-orange-600">
 							Max Out Your Alpha
@@ -232,9 +233,10 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
+				<CreateChart />
 			</main>
 			{/* <!-- end main --> */}
-			<MyChart />
+			{/* <MyChart /> */}
 			<div>
 				<div>
 					<label>
@@ -264,12 +266,6 @@ const Home = () => {
 					</label>
 				</div>
 				<button onClick={handleOutpaint}>Outpaint Image</button>
-				{outpaintedImagePath && (
-					<div>
-						<h2>Outpainted Image:</h2>
-						<img src={outpaintedImagePath} alt="Outpainted" />
-					</div>
-				)}
 			</div>
 		</Layout>
 	)

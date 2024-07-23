@@ -7,8 +7,8 @@ import remarkImages from "remark-images"
 import Layout from "../../../components/Layout"
 import Image from "next/image"
 import heroImage from "../../../../public/hero-image.jpg"
-import trumpVsBiden from "../../../../public/trumpVsBiden.jpg"
 import profile from "../../../../public/profile-img.jpg"
+import Script from "next/script"
 
 export default async function Article({ params: { slug } }) {
 	const filePath = path.join(process.cwd(), "articles", `${slug}.md`)
@@ -620,19 +620,6 @@ License: You must have a valid license from official store to legally use the th
 						></path>
 					</svg>
 				</a>
-
-				{/* <!--Vendor js--> */}
-				<script src="src/vendors/hc-sticky/dist/hc-sticky.js"></script>
-				<script src="src/vendors/glightbox/dist/js/glightbox.min.js"></script>
-				<script src="src/vendors/@splidejs/splide/dist/js/splide.min.js"></script>
-				<script src="src/vendors/@splidejs/splide-extension-video/dist/js/splide-extension-video.min.js"></script>
-
-				{/* <!-- Start development js --> */}
-				<script src="src/js/theme.js"></script>
-				{/* <!-- End development js --> */}
-
-				{/* <!-- Production js --> */}
-				{/* <!-- <script src="dist/js/scripts.js"></script> --> */}
 			</body>
 		</Layout>
 	)

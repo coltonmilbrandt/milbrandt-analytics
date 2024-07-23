@@ -1,31 +1,40 @@
-import fs from "fs"
-import path from "path"
+import { s3, bucketName } from "../../aws-config"
+import { v4 as uuidv4 } from "uuid"
+import moment from "moment"
 
 export default function handler(req, res) {
-	console.log("Handler reached:", req.method)
 	if (req.method === "POST") {
-		const { image } = req.body
-		console.log("Image data received:", image.substring(0, 100)) // Log first 100 chars of the image data
-		const base64Data = image.replace(/^data:image\/png;base64,/, "")
-		const filePath = path.join(
-			process.cwd(),
-			"public",
-			"imageTest",
-			"chart_snapshot_cropped.png"
+		const { image, ticker, date, timeframe } = req.body
+
+		if (!image || !ticker || !date || !timeframe) {
+			return res
+				.status(400)
+				.json({ success: false, message: "Missing required fields" })
+		}
+
+		const base64Data = Buffer.from(
+			image.replace(/^data:image\/\w+;base64,/, ""),
+			"base64"
 		)
+		const type = image.split(";")[0].split("/")[1]
+		const timestamp = moment().format("YYYYMMDD-HHmmss")
 
-		// Ensure the directory exists
-		fs.mkdirSync(path.dirname(filePath), { recursive: true })
+		const params = {
+			Bucket: bucketName,
+			Key: `${ticker}/${date}/${timeframe}/${timestamp}-${uuidv4()}.${type}`, // Generate a structured path for the image
+			Body: base64Data,
+			ContentEncoding: "base64", // required
+			ContentType: `image/${type}`, // required
+		}
 
-		fs.writeFile(filePath, base64Data, "base64", (err) => {
+		s3.upload(params, function (err, data) {
 			if (err) {
-				console.error("Error saving image:", err)
-				return res.status(500).json({ success: false })
+				console.error("Error uploading image:", err)
+				return res.status(500).json({ success: false, error: err })
 			}
-
 			res.status(200).json({
 				success: true,
-				path: "/imageTest/chart_snapshot_cropped.png",
+				url: data.Location,
 			})
 		})
 	} else {
