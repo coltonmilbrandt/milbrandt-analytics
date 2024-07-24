@@ -8,7 +8,7 @@ const CreateChart = () => {
 
 	const handleGenerateChart = async () => {
 		try {
-			const response = await axios.post("/api/generateChart", {
+			const response = await axios.post("/api/generate-chart", {
 				symbol,
 				interval,
 			})

@@ -20,8 +20,13 @@ const Navbar = () => {
 						</div>
 					</div>
 					<div className="flex items-center">
-						<Link href="/login">
+						<Link href="/create-chart">
 							<span className="mt-8 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white text-lg cursor-pointer">
+								Create Chart
+							</span>
+						</Link>
+						<Link href="/login">
+							<span className="mt-8 ml-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded text-white text-lg cursor-pointer">
 								Log in
 							</span>
 						</Link>

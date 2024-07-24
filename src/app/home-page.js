@@ -11,7 +11,6 @@ import LeftCover from "../components/LeftCover.js"
 import NewsBox from "../components/NewsBox"
 import ContentBox from "../components/ContentBox"
 import MyChart from "../components/chart"
-import CreateChart from "../components/CreateChart"
 import { useState } from "react"
 
 // ########### News Article Photos ########### //
@@ -233,7 +232,6 @@ const Home = () => {
 						</div>
 					</div>
 				</div>
-				<CreateChart />
 			</main>
 			{/* <!-- end main --> */}
 			{/* <MyChart /> */}
