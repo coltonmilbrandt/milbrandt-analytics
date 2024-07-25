@@ -4,12 +4,25 @@ import { v4 as uuidv4 } from "uuid"
 import moment from "moment"
 import yahooFinance from "yahoo-finance2"
 
-export async function generateChart(symbol, interval) {
+export async function generateChart(
+	symbol,
+	interval,
+	startDate,
+	endDate = new Date()
+) {
+	console.log("Received dates:", { startDate, endDate })
+
+	// Format the dates to the required format for Yahoo Finance API
+	const period1 = moment(startDate).format("YYYY-MM-DD")
+	const period2 = moment(endDate).format("YYYY-MM-DD")
+
+	console.log("Formatted dates:", { period1, period2 })
+
 	// Fetch the data using yahoo-finance2
 	const data = await yahooFinance.historical(symbol, {
-		period1: "2024-01-01",
-		period2: "2024-07-15",
-		interval: interval,
+		period1,
+		period2,
+		interval,
 	})
 
 	if (!data || data.length === 0) {
