@@ -26,13 +26,14 @@ const CreateChart = () => {
 		console.log("Sending request with dates:", { startDate, endDate })
 
 		try {
-			const response = await axios.post("/api/generate-chart", {
+			const response = await axios.post("/api/aws-chart-upload", {
 				symbol,
 				interval,
 				startDate,
 				endDate,
 			})
 			if (response.data.success) {
+				console.log("Image uploaded to S3:", response.data.url)
 				setImageUrl(response.data.url)
 			} else {
 				console.error("Failed to generate chart:", response.data.error)

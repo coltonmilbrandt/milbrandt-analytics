@@ -1,6 +1,4 @@
 import puppeteer from "puppeteer"
-import { s3, bucketName } from "../aws-config" // Adjust the import path
-import { v4 as uuidv4 } from "uuid"
 import moment from "moment"
 import yahooFinance from "yahoo-finance2"
 
@@ -10,15 +8,13 @@ export async function generateChart(
 	startDate,
 	endDate = new Date()
 ) {
-	console.log("Received dates:", { startDate, endDate })
+	console.log("Received dates in generateChart:", { startDate, endDate })
 
-	// Format the dates to the required format for Yahoo Finance API
 	const period1 = moment(startDate).format("YYYY-MM-DD")
 	const period2 = moment(endDate).format("YYYY-MM-DD")
 
 	console.log("Formatted dates:", { period1, period2 })
 
-	// Fetch the data using yahoo-finance2
 	const data = await yahooFinance.historical(symbol, {
 		period1,
 		period2,
@@ -29,10 +25,8 @@ export async function generateChart(
 		throw new Error("No data returned from Yahoo Finance API")
 	}
 
-	// Log the fetched data
 	console.log("Fetched Data:", data)
 
-	// Process data for echarts
 	const chartData = data.map((item) => [
 		item.date,
 		item.open,
@@ -46,29 +40,22 @@ export async function generateChart(
 		color: item.close > item.open ? "#92d3cc" : "#f8a9a7",
 	}))
 
-	// Log the processed data
 	console.log("Chart Data:", chartData)
 	console.log("Volume Data:", volumeData)
 
-	// Launch a headless browser
 	const browser = await puppeteer.launch()
 	const page = await browser.newPage()
 
-	// Set the content of the page
 	await page.setContent(`
-	<html>
-	  <head>
-		  <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
-		</head>
-		<body>
-		<div id="chart" style="width: 1500px; height: 900px;"></div>
-		<script>
-          console.log("Initializing ECharts...");
+  <html>
+    <head>
+      <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    </head>
+    <body>
+    <div id="chart" style="width: 1500px; height: 900px;"></div>
+    <script>
           const chartData = ${JSON.stringify(chartData)};
           const volumeData = ${JSON.stringify(volumeData)};
-
-          console.log("Chart Data:", chartData);
-          console.log("Volume Data:", volumeData);
 
           const myChart = echarts.init(document.getElementById('chart'));
           const option = {
@@ -186,25 +173,18 @@ export async function generateChart(
           };
 
           myChart.setOption(option);
-          console.log("ECharts initialized successfully");
         </script>
       </body>
     </html>
   `)
 
-	// Wait for the chart to be rendered
 	await page.waitForSelector("#chart")
 
-	// Add a delay to ensure the chart is fully rendered
-	await new Promise((resolve) => setTimeout(resolve, 3000)) // wait for 3 seconds
+	await new Promise((resolve) => setTimeout(resolve, 3000))
 
-	// Get the bounding box of the chart element
 	const chartElement = await page.$("#chart")
 	const boundingBox = await chartElement.boundingBox()
 
-	console.log("Bounding box:", boundingBox)
-
-	// Define the cropping dimensions
 	const crop = {
 		x: boundingBox.x + 150,
 		y: boundingBox.y + 50,
@@ -212,34 +192,17 @@ export async function generateChart(
 		height: boundingBox.height - 220,
 	}
 
-	console.log("Crop dimensions:", crop)
-
-	// Ensure all values are positive integers
 	Object.keys(crop).forEach((key) => {
 		crop[key] = Math.max(0, Math.floor(crop[key]))
 	})
 
-	// Capture the chart as a screenshot with cropping
 	const buffer = await page.screenshot({
 		type: "png",
 		clip: crop,
+		encoding: "base64",
 	})
 
-	// Close the browser
 	await browser.close()
 
-	// Upload to S3
-	const fileName = `${symbol}/${interval}/${moment().format(
-		"YYYY-MM-DD_HH-mm-ss"
-	)}.png`
-	const params = {
-		Bucket: bucketName,
-		Key: fileName,
-		Body: buffer,
-		ContentType: "image/png",
-	}
-
-	const uploadResult = await s3.upload(params).promise()
-
-	return uploadResult.Location
+	return buffer
 }
