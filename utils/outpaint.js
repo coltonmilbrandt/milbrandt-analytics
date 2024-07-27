@@ -1,53 +1,37 @@
-const fs = require("fs")
-const axios = require("axios")
-const FormData = require("form-data")
-const path = require("path")
+import axios from "axios"
+import FormData from "form-data"
+import { Readable } from "stream"
 
-const outpaintImage = async (imagePath, outputPath) => {
-	const payload = {
-		image: fs.createReadStream(imagePath),
-		left: 200,
-		down: 200,
-		output_format: "webp",
-	}
+export const outpaintImage = async (imageBuffer, creativity, prompt) => {
+	const stream = Readable.from(imageBuffer)
+	const formData = new FormData()
+	formData.append("image", stream, { filename: "chart.png" })
+	formData.append("right", 500)
+	formData.append("output_format", "png")
+	formData.append("creativity", creativity)
+	formData.append("prompt", prompt)
 
 	try {
 		const response = await axios.post(
 			`https://api.stability.ai/v2beta/stable-image/edit/outpaint`,
-			axios.toFormData(payload, new FormData()),
+			formData,
 			{
 				validateStatus: undefined,
 				responseType: "arraybuffer",
 				headers: {
 					Authorization: `Bearer ${process.env.STABILITY_AI_KEY}`,
-					Accept: "image/*",
+					...formData.getHeaders(),
 				},
 			}
 		)
 
 		if (response.status === 200) {
-			fs.writeFileSync(outputPath, Buffer.from(response.data))
-			console.log("Outpainted image saved successfully")
+			return Buffer.from(response.data)
 		} else {
 			throw new Error(`${response.status}: ${response.data.toString()}`)
 		}
 	} catch (error) {
 		console.error("Error during outpainting:", error)
+		throw error
 	}
 }
-
-// Example usage:
-const imagePath = path.join(
-	__dirname,
-	"public",
-	"imageTest",
-	"chart_snapshot_cropped.png"
-) // Path to your saved image
-const outputPath = path.join(
-	__dirname,
-	"public",
-	"imageTest",
-	"outpainted_image.webp"
-) // Path to save the outpainted image
-
-outpaintImage(imagePath, outputPath)
